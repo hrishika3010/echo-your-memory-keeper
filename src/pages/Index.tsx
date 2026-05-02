@@ -222,27 +222,34 @@ function Step({
 
 const Index = () => {
   return (
-    <main className="grain min-h-screen bg-background text-foreground">
+    <main className="grain min-h-screen text-foreground">
       {/* nav */}
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <a href="#" className="font-serif-i text-2xl">
-          echo
-        </a>
-        <div className="flex items-center gap-5 text-sm text-muted-foreground sm:gap-8">
-          <a href="#how" className="hover:text-foreground">
-            how it works
+      <nav className="sticky top-0 z-40 backdrop-blur-md bg-background/60 border-b border-foreground/5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <a href="#" className="font-serif-i text-2xl tracking-tight">
+            echo
           </a>
-          <a href="#examples" className="hidden hover:text-foreground sm:inline">
-            examples
-          </a>
-          <a href="#cta" className="text-[hsl(var(--accent))] hover:opacity-80">
-            get started
-          </a>
+          <div className="flex items-center gap-5 text-sm text-muted-foreground sm:gap-8">
+            <a href="#how" className="transition-colors hover:text-foreground">
+              how it works
+            </a>
+            <a href="#examples" className="hidden transition-colors hover:text-foreground sm:inline">
+              examples
+            </a>
+            <a
+              href="#cta"
+              className="rounded-full bg-[hsl(var(--accent))] px-4 py-1.5 text-[hsl(var(--accent-foreground))] transition-transform hover:scale-[1.03]"
+            >
+              get started
+            </a>
+          </div>
         </div>
       </nav>
 
       {/* hero */}
-      <section className="mx-auto max-w-6xl px-6 pb-24 pt-20 text-center sm:pt-32 sm:pb-32">
+      <section className="relative mx-auto max-w-6xl px-6 pb-24 pt-16 text-center sm:pt-24 sm:pb-32">
+        {/* warm lamp glow */}
+        <div className="lamp-glow pointer-events-none absolute left-1/2 top-0 -z-10 h-[520px] w-[820px] -translate-x-1/2" />
         <h1 className="font-serif-i text-7xl leading-[0.95] sm:text-8xl md:text-[10rem]">
           echo
         </h1>
@@ -251,6 +258,18 @@ const Index = () => {
           <br />
           it texts you back the memory.
         </p>
+
+        <div className="mt-10 flex flex-col items-center justify-center gap-3">
+          <a
+            href="#cta"
+            className="inline-block rounded-full bg-foreground px-8 py-3.5 text-sm text-background transition-transform hover:scale-[1.03]"
+          >
+            add echo to imessage
+          </a>
+          <a href="#how" className="text-xs text-muted-foreground hover:text-foreground">
+            see how it works ↓
+          </a>
+        </div>
 
         <div className="mt-20 flex flex-col items-center justify-center gap-8 sm:mt-24 sm:flex-row sm:gap-[-1rem]">
           {polaroids.map((p, i) => (

@@ -107,24 +107,31 @@ function Thread({ q, a, index }: { q: string; a: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [showQ, setShowQ] = useState(false);
+  const [typing, setTyping] = useState(false);
   const [typed, setTyped] = useState("");
 
   useEffect(() => {
     if (!inView) return;
-    const t1 = setTimeout(() => setShowQ(true), 150);
     const words = a.split(" ");
     let i = 0;
-    const startTyping = setTimeout(() => {
-      const interval = setInterval(() => {
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const t1 = setTimeout(() => setShowQ(true), 150);
+    const t2 = setTimeout(() => setTyping(true), 700);
+    const t3 = setTimeout(() => {
+      interval = setInterval(() => {
         i++;
         setTyped(words.slice(0, i).join(" "));
-        if (i >= words.length) clearInterval(interval);
+        if (i >= words.length) {
+          setTyping(false);
+          if (interval) clearInterval(interval);
+        }
       }, 80);
-      (startTyping as any)._int = interval;
-    }, 900);
+    }, 1400);
     return () => {
       clearTimeout(t1);
-      clearTimeout(startTyping);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      if (interval) clearInterval(interval);
     };
   }, [inView, a]);
 
@@ -146,12 +153,22 @@ function Thread({ q, a, index }: { q: string; a: string; index: number }) {
           </motion.div>
         </div>
         <div className="flex justify-start">
-          <div className="min-h-[44px] max-w-[85%] rounded-2xl rounded-bl-md bg-ink px-4 py-2.5 text-[15px] text-background">
-            {typed}
-            {typed && typed.length < a.length && (
-              <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-background/70 align-middle" />
-            )}
-          </div>
+          {typing && !typed ? (
+            <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-md bg-ink/90 px-4 py-3.5">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-background/70 [animation-delay:-0.3s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-background/70 [animation-delay:-0.15s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-background/70" />
+            </div>
+          ) : (
+            typed && (
+              <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-ink px-4 py-2.5 text-[15px] leading-snug text-background">
+                {typed}
+                {typed.length < a.length && (
+                  <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-background/70 align-middle" />
+                )}
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>
@@ -203,29 +220,56 @@ function Step({
   );
 }
 
+function PhoneCard() {
+  const number = "+1 (415) 555-0123";
+  const [copied, setCopied] = useState(false);
+  return (
+    <div className="mx-auto mt-12 flex max-w-sm items-center justify-between gap-4 rounded-2xl border border-background/15 bg-background/5 px-5 py-4 backdrop-blur-sm">
+      <span className="font-serif-i text-2xl text-background">{number}</span>
+      <button
+        onClick={() => {
+          navigator.clipboard?.writeText(number);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1600);
+        }}
+        className="rounded-full border border-background/20 px-3 py-1.5 text-xs text-background/80 transition-colors hover:bg-background/10"
+      >
+        {copied ? "copied" : "copy"}
+      </button>
+    </div>
+  );
+}
+
 const Index = () => {
   return (
-    <main className="grain min-h-screen bg-background text-foreground">
+    <main className="grain min-h-screen text-foreground">
       {/* nav */}
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <a href="#" className="font-serif-i text-2xl">
-          echo
-        </a>
-        <div className="flex items-center gap-5 text-sm text-muted-foreground sm:gap-8">
-          <a href="#how" className="hover:text-foreground">
-            how it works
+      <nav className="sticky top-0 z-40 backdrop-blur-md bg-background/60 border-b border-foreground/5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <a href="#" className="font-serif-i text-2xl tracking-tight">
+            echo
           </a>
-          <a href="#examples" className="hidden hover:text-foreground sm:inline">
-            examples
-          </a>
-          <a href="#cta" className="text-[hsl(var(--accent))] hover:opacity-80">
-            get started
-          </a>
+          <div className="flex items-center gap-5 text-sm text-muted-foreground sm:gap-8">
+            <a href="#how" className="transition-colors hover:text-foreground">
+              how it works
+            </a>
+            <a href="#examples" className="hidden transition-colors hover:text-foreground sm:inline">
+              examples
+            </a>
+            <a
+              href="#cta"
+              className="rounded-full bg-[hsl(var(--accent))] px-4 py-1.5 text-[hsl(var(--accent-foreground))] transition-transform hover:scale-[1.03]"
+            >
+              get started
+            </a>
+          </div>
         </div>
       </nav>
 
       {/* hero */}
-      <section className="mx-auto max-w-6xl px-6 pb-24 pt-20 text-center sm:pt-32 sm:pb-32">
+      <section className="relative mx-auto max-w-6xl px-6 pb-24 pt-16 text-center sm:pt-24 sm:pb-32">
+        {/* warm lamp glow */}
+        <div className="lamp-glow pointer-events-none absolute left-1/2 top-0 -z-10 h-[520px] w-[820px] -translate-x-1/2" />
         <h1 className="font-serif-i text-7xl leading-[0.95] sm:text-8xl md:text-[10rem]">
           echo
         </h1>
@@ -234,6 +278,18 @@ const Index = () => {
           <br />
           it texts you back the memory.
         </p>
+
+        <div className="mt-10 flex flex-col items-center justify-center gap-3">
+          <a
+            href="#cta"
+            className="inline-block rounded-full bg-foreground px-8 py-3.5 text-sm text-background transition-transform hover:scale-[1.03]"
+          >
+            add echo to imessage
+          </a>
+          <a href="#how" className="text-xs text-muted-foreground hover:text-foreground">
+            see how it works ↓
+          </a>
+        </div>
 
         <div className="mt-20 flex flex-col items-center justify-center gap-8 sm:mt-24 sm:flex-row sm:gap-[-1rem]">
           {polaroids.map((p, i) => (
@@ -298,12 +354,18 @@ const Index = () => {
             no app to download. echo lives in the messages where your memories
             already happen.
           </p>
+
+          <PhoneCard />
+
           <a
-            href="#"
-            className="mt-12 inline-block rounded-full bg-[hsl(var(--accent))] px-10 py-4 text-base text-[hsl(var(--accent-foreground))] transition-transform duration-300 hover:scale-[1.02]"
+            href="sms:+14155550123"
+            className="mt-8 inline-block rounded-full bg-[hsl(var(--accent))] px-10 py-4 text-base text-[hsl(var(--accent-foreground))] transition-transform duration-300 hover:scale-[1.03]"
           >
             add echo to imessage
           </a>
+          <p className="mt-4 text-xs text-background/50">
+            us & canada · free during the quiet beta
+          </p>
         </div>
       </section>
 

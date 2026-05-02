@@ -107,24 +107,31 @@ function Thread({ q, a, index }: { q: string; a: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [showQ, setShowQ] = useState(false);
+  const [typing, setTyping] = useState(false);
   const [typed, setTyped] = useState("");
 
   useEffect(() => {
     if (!inView) return;
-    const t1 = setTimeout(() => setShowQ(true), 150);
     const words = a.split(" ");
     let i = 0;
-    const startTyping = setTimeout(() => {
-      const interval = setInterval(() => {
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const t1 = setTimeout(() => setShowQ(true), 150);
+    const t2 = setTimeout(() => setTyping(true), 700);
+    const t3 = setTimeout(() => {
+      interval = setInterval(() => {
         i++;
         setTyped(words.slice(0, i).join(" "));
-        if (i >= words.length) clearInterval(interval);
+        if (i >= words.length) {
+          setTyping(false);
+          if (interval) clearInterval(interval);
+        }
       }, 80);
-      (startTyping as any)._int = interval;
-    }, 900);
+    }, 1400);
     return () => {
       clearTimeout(t1);
-      clearTimeout(startTyping);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      if (interval) clearInterval(interval);
     };
   }, [inView, a]);
 

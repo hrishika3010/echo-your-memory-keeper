@@ -52,7 +52,12 @@
     @apply border-border;
   }
   html, body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(1100px 600px at 50% -10%, hsl(var(--glow) / 0.45), transparent 60%),
+      radial-gradient(900px 500px at 90% 10%, hsl(var(--glow-2) / 0.35), transparent 65%);
+    background-attachment: fixed;
     font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
@@ -86,7 +91,14 @@
   }
 
   .polaroid-shadow {
-    box-shadow: 0 1px 1px hsl(30 18% 9% / 0.06), 0 12px 24px -12px hsl(30 18% 9% / 0.18);
+    box-shadow:
+      0 1px 1px hsl(22 32% 11% / 0.06),
+      0 18px 40px -18px hsl(22 32% 11% / 0.28),
+      0 2px 8px -2px hsl(14 60% 30% / 0.12);
+  }
+
+  .lamp-glow {
+    background: radial-gradient(60% 60% at 50% 40%, hsl(var(--glow) / 0.55), transparent 70%);
   }
 }
 

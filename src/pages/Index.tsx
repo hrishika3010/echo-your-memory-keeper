@@ -220,7 +220,25 @@ function Step({
   );
 }
 
-const Index = () => {
+function PhoneCard() {
+  const number = "+1 (415) 555-0123";
+  const [copied, setCopied] = useState(false);
+  return (
+    <div className="mx-auto mt-12 flex max-w-sm items-center justify-between gap-4 rounded-2xl border border-background/15 bg-background/5 px-5 py-4 backdrop-blur-sm">
+      <span className="font-serif-i text-2xl text-background">{number}</span>
+      <button
+        onClick={() => {
+          navigator.clipboard?.writeText(number);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1600);
+        }}
+        className="rounded-full border border-background/20 px-3 py-1.5 text-xs text-background/80 transition-colors hover:bg-background/10"
+      >
+        {copied ? "copied" : "copy"}
+      </button>
+    </div>
+  );
+}
   return (
     <main className="grain min-h-screen text-foreground">
       {/* nav */}

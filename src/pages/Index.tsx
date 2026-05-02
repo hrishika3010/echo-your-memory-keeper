@@ -239,6 +239,8 @@ function PhoneCard() {
     </div>
   );
 }
+
+const Index = () => {
   return (
     <main className="grain min-h-screen text-foreground">
       {/* nav */}

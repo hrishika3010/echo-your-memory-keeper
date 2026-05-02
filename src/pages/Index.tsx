@@ -153,12 +153,22 @@ function Thread({ q, a, index }: { q: string; a: string; index: number }) {
           </motion.div>
         </div>
         <div className="flex justify-start">
-          <div className="min-h-[44px] max-w-[85%] rounded-2xl rounded-bl-md bg-ink px-4 py-2.5 text-[15px] text-background">
-            {typed}
-            {typed && typed.length < a.length && (
-              <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-background/70 align-middle" />
-            )}
-          </div>
+          {typing && !typed ? (
+            <div className="flex items-center gap-1.5 rounded-2xl rounded-bl-md bg-ink/90 px-4 py-3.5">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-background/70 [animation-delay:-0.3s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-background/70 [animation-delay:-0.15s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-background/70" />
+            </div>
+          ) : (
+            typed && (
+              <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-ink px-4 py-2.5 text-[15px] leading-snug text-background">
+                {typed}
+                {typed.length < a.length && (
+                  <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-background/70 align-middle" />
+                )}
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>

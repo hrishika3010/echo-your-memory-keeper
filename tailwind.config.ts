@@ -19,6 +19,9 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        polaroid: "hsl(var(--polaroid))",
+        "section-alt": "hsl(var(--section-alt))",
+        ink: "hsl(var(--ink))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

@@ -1,0 +1,37 @@
+{
+  "name": "the-roll-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/api/server.ts",
+    "dev:worker": "tsx watch src/worker/index.ts",
+    "build": "tsup src/api/server.ts src/worker/index.ts --format esm --dts --out-dir dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/lib/db/migrate.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.804.0",
+    "@hono/node-server": "^1.14.1",
+    "@hydra_db/node": "^0.1.2",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.44.0",
+    "hono": "^4.7.8",
+    "pg": "^8.15.6",
+    "pg-boss": "^10.3.2",
+    "spectrum-ts": "^1.2.1",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "drizzle-kit": "^0.31.1",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
+  }
+}

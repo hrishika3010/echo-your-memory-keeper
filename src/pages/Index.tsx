@@ -334,12 +334,18 @@ const Index = () => {
             no app to download. echo lives in the messages where your memories
             already happen.
           </p>
+
+          <PhoneCard />
+
           <a
-            href="#"
-            className="mt-12 inline-block rounded-full bg-[hsl(var(--accent))] px-10 py-4 text-base text-[hsl(var(--accent-foreground))] transition-transform duration-300 hover:scale-[1.02]"
+            href="sms:+14155550123"
+            className="mt-8 inline-block rounded-full bg-[hsl(var(--accent))] px-10 py-4 text-base text-[hsl(var(--accent-foreground))] transition-transform duration-300 hover:scale-[1.03]"
           >
             add echo to imessage
           </a>
+          <p className="mt-4 text-xs text-background/50">
+            us & canada · free during the quiet beta
+          </p>
         </div>
       </section>
 

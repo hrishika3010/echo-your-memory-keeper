@@ -7,16 +7,18 @@
 
 @layer base {
   :root {
-    /* Echo palette */
-    --background: 38 33% 94%;        /* #F5F1EA warm cream */
-    --foreground: 30 18% 9%;          /* #1A1612 warm near-black */
-    --muted: 36 22% 86%;              /* slightly darker cream */
-    --muted-foreground: 33 14% 42%;   /* #7A6F5F warm gray-brown */
-    --accent: 10 75% 45%;             /* #C73E1D faded brick red */
-    --accent-foreground: 38 33% 94%;
-    --polaroid: 60 20% 98%;           /* #FAFAF7 polaroid frame */
-    --section-alt: 38 28% 89%;        /* #EDE7DB section alt bg */
-    --ink: 30 18% 9%;
+    /* Echo palette — warmer, sunset-lamp tones */
+    --background: 33 48% 92%;         /* warmer cream, peachy */
+    --foreground: 22 32% 11%;         /* warm near-black w/ brown */
+    --muted: 28 38% 85%;              /* peachy oat */
+    --muted-foreground: 22 20% 36%;   /* warm cocoa */
+    --accent: 14 74% 47%;             /* warm brick / terracotta */
+    --accent-foreground: 33 48% 96%;
+    --polaroid: 40 50% 97%;           /* creamier polaroid */
+    --section-alt: 26 42% 85%;        /* warm sand */
+    --ink: 22 32% 11%;
+    --glow: 22 82% 72%;               /* sunset peach glow */
+    --glow-2: 38 78% 78%;             /* honey glow */
 
     /* shadcn token aliases (kept for any imported ui bits) */
     --card: 60 20% 98%;
